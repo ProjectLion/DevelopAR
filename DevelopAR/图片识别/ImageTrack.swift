@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 
+/// 测试时可在Assetes.xcassets资源组中的ImageTrackSources中右键相应的图片show in finder，查看大图后进行扫描识别
 class ImageTrack: ARBasicVC {
 
     override func viewDidLoad() {
