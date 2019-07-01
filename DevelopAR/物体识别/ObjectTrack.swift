@@ -12,7 +12,9 @@ import ARKit
 /// 在测物体识别的时候请替换 or 添加你自己的识别体资源文件。在Assets.xcassets资源组中的ObjectTrakSources中
 /// 因为我demo里的物体你没有
 class ObjectTrack: ARBasicVC {
-
+    
+    var boxNode: SCNNode!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,14 +47,21 @@ extension ObjectTrack: ARSCNViewDelegate {
             print("识别到名为: \(objAnchor.name ?? "空空空") 的物体")
             let objSize = objAnchor.referenceObject.extent
             // 生成一个box
-            let plane = SCNBox(width: CGFloat(objSize.x), height: CGFloat(objSize.y), length: CGFloat(objSize.z), chamferRadius: 0)
-            plane.materials.first?.diffuse.contents = UIColor.red
+            let box = SCNBox(width: CGFloat(objSize.x), height: CGFloat(objSize.y), length: CGFloat(objSize.z), chamferRadius: 0)
+            box.materials.first?.diffuse.contents = UIColor.red
             
-            let planeNode = SCNNode(geometry: plane)
+            boxNode = SCNNode(geometry: box)
             
-            node.addChildNode(planeNode)
+            node.addChildNode(boxNode)
         } else {
             print("不是物体")
         }
     }
+    
+    func renderer(_ renderer: SCNSceneRenderer, willUpdate node: SCNNode, for anchor: ARAnchor) {
+        if let obj = anchor as? ARObjectAnchor {
+            boxNode.position = SCNVector3(obj.referenceObject.center.x, obj.referenceObject.center.y, obj.referenceObject.center.z)
+        }
+    }
+    
 }
