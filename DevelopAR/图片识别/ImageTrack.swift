@@ -20,6 +20,13 @@ class ImageTrack: ARBasicVC {
         // 默认是没有的，点击Assets.xcassets文件，new 一个 AR Resource Group
         guard let referenceImgs = ARReferenceImage.referenceImages(inGroupNamed: "ImageTrackSources", bundle: nil) else { assert(false, "未找到识别图资源") }
         
+        /// 从服务器加载识别图资源包可通过自定义Bundle的方式进行，将Bundle包下载解压后加载识别图资源
+//        let path = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("ImgTrakingSource.Bundle")
+//        let bundle = Bundle(url: path)
+//        bundle?.load()
+//        print(path)
+//        guard let referenceImgs = ARReferenceImage.referenceImages(inGroupNamed: "Imgs", bundle: bundle) else { assert(false, "未找到识别图资源") }
+        
         // 也可以通过下面的方式生成单个 ARReferenceImage，然后设置
         //        ARReferenceImage(<#T##image: CGImage##CGImage#>, orientation: <#T##CGImagePropertyOrientation#>, physicalWidth: <#T##CGFloat#>)
         
